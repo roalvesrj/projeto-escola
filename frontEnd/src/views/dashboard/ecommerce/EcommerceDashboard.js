@@ -42,57 +42,6 @@ class EcommerceDashboard extends React.Component {
             <OrdersReceived />
           </Col>
         </Row>
-        <Row className="match-height">
-          <Col lg="8" md="6" sm="12">
-            <RevenueChart
-              primary={$primary}
-              dangerLight={$danger_light}
-              strokeColor={$stroke_color}
-              labelColor={$label_color}
-            />
-          </Col>
-          <Col lg="4" md="6" sm="12">
-            <GoalOverview strokeColor={$stroke_color} success={$success} />
-          </Col>
-        </Row>
-        <Row className="match-height">
-          <Col lg="4" md="6" sm="12">
-            <BrowserStats />
-          </Col>
-          <Col lg="8" md="6" sm="12">
-            <ClientRetention
-              strokeColor={$stroke_color}
-              primary={$primary}
-              danger={$danger}
-              labelColor={$label_color}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="4" md="12">
-            <SessionByDevice
-              primary={$primary}
-              warning={$warning}
-              danger={$danger}
-              primaryLight={$primary_light}
-              warningLight={$warning_light}
-              dangerLight={$danger_light}
-            />
-          </Col>
-          <Col lg="4" md="12" className="text-center align-middle">
-            <ChatWidget></ChatWidget>
-          </Col>
-          <Col lg="4" md="12" className="text-center align-middle">
-            <CustomersChart
-              primary={$primary}
-              warning={$warning}
-              danger={$danger}
-              primaryLight={$primary_light}
-              warningLight={$warning_light}
-              dangerLight={$danger_light}
-            />
-          </Col>
-        </Row>
       </React.Fragment>
     )
   }

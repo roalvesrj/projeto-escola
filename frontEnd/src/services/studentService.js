@@ -8,6 +8,10 @@ const listarID = (id) => {
     return api.get(`/alunos/${id}`);
 };
 
+const listarCPF = (cpf) => {
+    return api.get(`/alunos/cpf/${cpf}`);
+};
+
 const incluir = (data) => {
     return api.post(`/alunos`, data);
 };

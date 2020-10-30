@@ -116,7 +116,7 @@ const ProfessorAdd = () => {
 
     const onSubmit = (values, { resetForm }) => {
         // alert(JSON.stringify(values, null, 2));
-        professor.incluir(values)
+        professorService.incluir(values)
             .then(response => {
                 Object.keys(values).forEach(key => (values[key] = ""));
                 resetForm(values);
