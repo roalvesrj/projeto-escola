@@ -24,12 +24,14 @@ import classService from "../../../services/classService";
 import studentService from "../../../services/studentService";
 
 const genderSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "Feminino", label: "Feminino" },
     { value: "Masculino", label: "Masculino" },
     { value: "Outros", label: "Outros" }
 ];
 
 const shiftSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "Matutino", label: "Matutino" },
     { value: "Vespertino", label: "Vespertino" },
     { value: "Noturno", label: "Noturno" },
@@ -37,6 +39,7 @@ const shiftSelector = [
 ];
 
 const ufSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "AC", label: "Acre" },
     { value: "AL", label: "Alagoas" },
     { value: "AP", label: "Amapá" },
@@ -67,6 +70,7 @@ const ufSelector = [
 ];
 
 const statusSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "Pré-matriculado", label: "Pré-matriculado" },
     { value: "Matriculado", label: "Matriculado" },
     { value: "Cancelado", label: "Cancelado" },
@@ -96,25 +100,6 @@ const StudentAdd = () => {
             });
     }, []);
 
-    function onBlurCPF(ev) {
-        const { value } = ev.target;
-        const cpf = value?.replace(/[^0-9]/g, "");
-
-        if (cpf?.length !== 11) {
-            return;
-        }
-
-        studentService.listarCPF(cpf)
-            .then((response) => {
-                if (response.status === 200) {
-                    alert("CPF já cadastrado!");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
     function onBlurCEP(ev, setFieldValue) {
         const { value } = ev.target;
         const cep = value?.replace(/[^0-9]/g, '');
@@ -127,7 +112,6 @@ const StudentAdd = () => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.erro === true) {
-                    alert("O CEP " + cep + " é inválido.");
                     setColor("warning");
                     setMensagem("O CEP " + cep + " é inválido.");
                     setIsOpen(true);
@@ -141,7 +125,8 @@ const StudentAdd = () => {
     };
 
     const onSubmit = (values, { resetForm }) => {
-        // alert(JSON.stringify(values, null, 2));
+        alert(JSON.stringify(values, null, 2));
+
         studentService.incluir(values)
             .then(response => {
                 Object.keys(values).forEach(key => (values[key] = ""));
@@ -149,13 +134,13 @@ const StudentAdd = () => {
 
                 if (response.status === 200) {
                     setColor("success")
-                    setMensagem("O professor " + values.nome + " foi adicionado com sucesso!")
+                    setMensagem("O aluno " + values.nome + " foi adicionado com sucesso!")
                     setIsOpen(true);
                 }
             })
             .catch((error) => {
                 setColor("danger")
-                setMensagem("Ocorreu um erro ao tentar adicionar o professor " + values.nome + ".")
+                setMensagem("Ocorreu um erro ao tentar adicionar o aluno " + values.nome + ".")
                 setIsOpen(true);
             })
 
@@ -292,7 +277,6 @@ const StudentAdd = () => {
                                                         name="cpf"
                                                         id="cpf"
                                                         className={`form-control ${errors.cpf && touched.cpf && "is-invalid"}`}
-                                                        onBlur={(ev) => onBlurCPF(ev)}
                                                     />
                                                     <span className="text-muted">Somente números.</span>
                                                     <ErrorMessage name="cpf" />
@@ -569,7 +553,6 @@ const StudentAdd = () => {
                                                         id="turno"
                                                         onChange={handleChange}
                                                         options={shiftSelector}
-                                                        selected={values.turno}
                                                         className={`form-control ${errors.turno && touched.turno && "is-invalid"}`}
                                                     />
                                                     <ErrorMessage name="turno" />
@@ -584,7 +567,6 @@ const StudentAdd = () => {
                                                         id="status"
                                                         onChange={handleChange}
                                                         options={statusSelector}
-                                                        selected={values.status}
                                                         className={`form-control ${errors.status && touched.status && "is-invalid"}`}
                                                     />
                                                     <ErrorMessage name="status" />
@@ -592,16 +574,18 @@ const StudentAdd = () => {
                                             </FormGroup>
                                             <FormGroup row>
                                                 <Col md="4">
-                                                    <Label for="idTurma">ID Turma</Label>
+                                                    <Label for="idTurma">Turma</Label>
                                                     <Field
-                                                        component={formSelector}
+                                                        component="select"
                                                         name="idTurma"
                                                         id="idTurma"
-                                                        onChange={handleChange}
-                                                        options={listaTurmas}
-                                                        selected={values.idTurma}
                                                         className={`form-control ${errors.idTurma && touched.idTurma && "is-invalid"}`}
-                                                    />
+                                                    >
+                                                        <option value={null}>- Selecione -</option>
+                                                        {listaTurmas.map((l, index) => (
+                                                            <option key={index} value={l.matricula}>{l.nome}</option>
+                                                        ))}
+                                                    </Field>
                                                 </Col>
                                             </FormGroup>
 

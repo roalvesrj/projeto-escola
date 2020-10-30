@@ -104,7 +104,6 @@ const ProfessorAdd = () => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.erro === true) {
-                    alert("O CEP " + cep + " é inválido.");
                     setColor("warning");
                     setMensagem("O CEP " + cep + " é inválido.");
                     setIsOpen(true);
@@ -118,7 +117,6 @@ const ProfessorAdd = () => {
     };
 
     const onSubmit = (values, { resetForm }) => {
-        alert(JSON.stringify(values, null, 2));
         professorService.incluir(values)
             .then(response => {
                 Object.keys(values).forEach(key => (values[key] = ""));

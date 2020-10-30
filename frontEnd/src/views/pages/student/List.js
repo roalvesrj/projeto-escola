@@ -136,7 +136,6 @@ const List = () => {
             cell: row => (
                 <div className="actions cursor-pointer">
                     <Edit
-                        // className="mr-50"
                         style={{ 'margin-right': '1.5rem' }}
                         size={20}
                         onClick={() => history.push("/aluno/editar/" + row.matricula)}

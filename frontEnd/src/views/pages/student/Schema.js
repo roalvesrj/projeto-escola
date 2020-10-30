@@ -55,22 +55,14 @@ export default Yup.object().shape({
     .min(2, 'Mínimo de 2 caracteres.')
     .max(100, 'Máximo de 100 caracteres.'),
   anoIngresso: Yup.number()
-    .required("Preenchimento obrigatório.")
-    .min(2, 'Mínimo de 2 caracteres.')
-    .max(100, 'Máximo de 100 caracteres.'),
+    .required("Preenchimento obrigatório."),
   anoConclusao: Yup.number()
-    .required("Preenchimento obrigatório.")
-    .min(2, 'Mínimo de 2 caracteres.')
-    .max(100, 'Máximo de 100 caracteres.'),
+    .notRequired(),
   turno: Yup.string()
     .required("Preenchimento obrigatório."),
   status: Yup.string()
     .required("Preenchimento obrigatório."),
-  idTurma: Yup.number()
-    .required("Preenchimento obrigatório.")
-    .min(2, 'Mínimo de 2 caracteres.')
-    .max(100, 'Máximo de 100 caracteres.'),
-
-
+  idTurma: Yup.string()
+    .required("Preenchimento obrigatório."),
 })
 
