@@ -79,6 +79,7 @@ const StudentEdit = () => {
     let history = useHistory();
     const { params } = useRouteMatch();
 
+    const [listaTurmas, setListaTurmas] = useState([]);
     const [aluno, setAluno] = useState([]);
 
     const [mensagem, setMensagem] = useState("");
@@ -97,7 +98,6 @@ const StudentEdit = () => {
             .then((res) => res.json())
             .then((data) => {
                 if (data.erro === true) {
-                    alert("O CEP " + cep + " é inválido.");
                     setColor("warning");
                     setMensagem("O CEP " + cep + " é inválido.");
                     setIsOpen(true);
@@ -110,7 +110,29 @@ const StudentEdit = () => {
             })
     };
 
-    // Recupera a lista de professores
+    // Funcao para reescrever o formato entregue do array
+    function arrayReplace(dados) {
+        let dataCourse = [];
+        for (let i = 0; i < dados.length; i++) {
+            dataCourse.splice(1, 0, { value: dados[i].idCurso, label: dados[i].nome })
+        }
+        return dataCourse;
+    }
+
+    // Recupera a lista de turmas
+    useEffect(() => {
+        classService.listarTodos()
+            .then((response) => {
+                setListaTurmas(arrayReplace(response.data.content));
+            })
+            .catch((error) => {
+                setColor("danger");
+                setMensagem("Ocorreu um erro ao carregar a lista de professores.");
+                setIsOpen(true);
+            });
+    }, []);
+
+    // Recupera a lista de alunos
     useEffect(() => {
         studentService.listarID(params.id)
             .then((response) => {
@@ -143,7 +165,7 @@ const StudentEdit = () => {
 
         setTimeout(() => {
             setIsOpen(false);
-            history.push("/alunos/listar");
+            history.push("/aluno/listar");
         }, 8000);
     };
 
@@ -213,92 +235,89 @@ const StudentEdit = () => {
 
                                                         <FormGroup row>
                                                             <Col md="12">
-                                                                <Label for="nome">Nome</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="text"
                                                                     name="nome"
                                                                     id="nome"
-                                                                    className={`form-control ${errors.nome && touched.nome && "is-invalid"}`}
+                                                                    label="Nome"
+                                                                    onChange={handleChange}
+                                                                    value={values.nome}
                                                                 />
-                                                                <ErrorMessage name="nome" />
                                                             </Col>
                                                         </FormGroup>
                                                         <FormGroup row>
                                                             <Col md="12">
-                                                                <Label for="nomeSocial">Nome Social</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="text"
                                                                     name="nomeSocial"
                                                                     id="nomeSocial"
-                                                                    className={`form-control ${errors.nomeSocial && touched.nomeSocial && "is-invalid"}`}
+                                                                    label="Nome Social"
+                                                                    onChange={handleChange}
+                                                                    value={values.nomeSocial}
                                                                 />
-                                                                <ErrorMessage name="nomeSocial" />
                                                             </Col>
                                                         </FormGroup>
                                                         <FormGroup row>
                                                             <Col md="12">
-                                                                <Label for="nomeMae">Nome da mãe</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="text"
                                                                     name="nomeMae"
                                                                     id="nomeMae"
-                                                                    className={`form-control ${errors.nomeMae && touched.nomeMae && "is-invalid"}`}
+                                                                    label="Nome da mãe"
+                                                                    onChange={handleChange}
+                                                                    value={values.nomeMae}
                                                                 />
-                                                                <ErrorMessage name="nomeMae" />
                                                             </Col>
                                                         </FormGroup>
                                                         <FormGroup row>
                                                             <Col md="12">
-                                                                <Label for="nomePai">Nome do Pai</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="text"
                                                                     name="nomePai"
                                                                     id="nomePai"
-                                                                    className={`form-control ${errors.nomePai && touched.nomePai && "is-invalid"}`}
+                                                                    label="Nome do Pai"
+                                                                    onChange={handleChange}
+                                                                    value={values.nomePai}
                                                                 />
-                                                                <ErrorMessage name="nomePai" />
                                                             </Col>
                                                         </FormGroup>
                                                         <FormGroup row>
                                                             <Col md="12">
-                                                                <Label for="responsavel">Nome do Responsável</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="text"
                                                                     name="responsavel"
                                                                     id="responsavel"
-                                                                    className={`form-control ${errors.responsavel && touched.responsavel && "is-invalid"}`}
+                                                                    label="Nome do Responsável"
+                                                                    onChange={handleChange}
+                                                                    value={values.responsavel}
                                                                 />
-                                                                <ErrorMessage name="responsavel" />
                                                             </Col>
                                                         </FormGroup>
-
-
                                                         <FormGroup row>
                                                             <Col md="6">
-                                                                <Label for="cpf">CPF</Label>
-                                                                <Field
-                                                                    type="number"
+                                                                <Input
+                                                                    type="text"
                                                                     name="cpf"
                                                                     id="cpf"
-                                                                    disabled="disabled"
-                                                                    className={`form-control ${errors.cpf && touched.cpf && "is-invalid"}`}
+                                                                    label="CPF"
+                                                                    onChange={handleChange}
+                                                                    value={values.cpf}
                                                                 />
                                                                 <span className="text-muted">Somente números.</span>
-                                                                <ErrorMessage name="cpf" />
                                                             </Col>
                                                         </FormGroup>
 
                                                         <FormGroup row>
                                                             <Col md="6">
-                                                                <Label for="rg">RG</Label>
-                                                                <Field
+                                                                <Input
                                                                     type="number"
                                                                     name="rg"
                                                                     id="rg"
-                                                                    className={`form-control ${errors.rg && touched.rg && "is-invalid"}`}
+                                                                    label="RG"
+                                                                    onChange={handleChange}
+                                                                    value={values.rg}
                                                                 />
                                                                 <span className="text-muted">Somente números.</span>
-                                                                <ErrorMessage name="rg" />
                                                             </Col>
                                                         </FormGroup>
 
@@ -306,9 +325,12 @@ const StudentEdit = () => {
                                                             <Col md="6">
                                                                 <Label for="genero">Gênero</Label>
                                                                 <Field
-                                                                    component={genderSelector}
+                                                                    component={formSelector}
                                                                     name="genero"
                                                                     id="genero"
+                                                                    onChange={handleChange}
+                                                                    options={genderSelector}
+                                                                    selected={values.genero}
                                                                     className={`form-control ${errors.genero && touched.genero && "is-invalid"}`}
                                                                 />
                                                                 <ErrorMessage name="genero" />
@@ -465,9 +487,12 @@ const StudentEdit = () => {
                                                             <Col md="6">
                                                                 <Label for="estado">Estado</Label>
                                                                 <Field
-                                                                    component="select"
+                                                                    component={formSelector}
                                                                     name="estado"
                                                                     id="estado"
+                                                                    onChange={handleChange}
+                                                                    options={ufSelector}
+                                                                    selected={values.estado}
                                                                     className={`form-control ${errors.estado && touched.estado && "is-invalid"}`}
                                                                 />
                                                                 <ErrorMessage name="estado" />
@@ -560,9 +585,12 @@ const StudentEdit = () => {
                                                             <Col md="6">
                                                                 <Label for="turno">Turno</Label>
                                                                 <Field
-                                                                    component={shiftSelector}
+                                                                    component={formSelector}
                                                                     name="turno"
                                                                     id="turno"
+                                                                    onChange={handleChange}
+                                                                    options={shiftSelector}
+                                                                    selected={values.turno}
                                                                     className={`form-control ${errors.turno && touched.turno && "is-invalid"}`}
                                                                 />
                                                                 <ErrorMessage name="turno" />
@@ -572,9 +600,12 @@ const StudentEdit = () => {
                                                             <Col md="6">
                                                                 <Label for="status">Status</Label>
                                                                 <Field
-                                                                    component={statusSelector}
+                                                                    component={formSelector}
                                                                     name="status"
                                                                     id="status"
+                                                                    onChange={handleChange}
+                                                                    options={statusSelector}
+                                                                    selected={values.status}
                                                                     className={`form-control ${errors.status && touched.status && "is-invalid"}`}
                                                                 />
                                                                 <ErrorMessage name="status" />
@@ -582,13 +613,17 @@ const StudentEdit = () => {
                                                         </FormGroup>
                                                         <FormGroup row>
                                                             <Col md="4">
-                                                                <Label for="idTurma">ID Turma</Label>
+                                                                <Label for="idTurma">Turma</Label>
                                                                 <Field
-                                                                    type="number"
+                                                                    component={formSelector}
                                                                     name="idTurma"
                                                                     id="idTurma"
+                                                                    onChange={handleChange}
+                                                                    options={listaTurmas}
+                                                                    selected={values.idTurma}
                                                                     className={`form-control ${errors.idTurma && touched.idTurma && "is-invalid"}`}
                                                                 />
+                                                                <ErrorMessage name="idTurma" />
                                                             </Col>
                                                         </FormGroup>
 
