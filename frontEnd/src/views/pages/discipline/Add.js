@@ -217,7 +217,7 @@ const DisciplineAdd = () => {
                                             <Button.Ripple className="mr-1" color="primary" type="submit" disabled={!isValid}><Save size={15} className="mr-1" />
                                             Salvar
                                         </Button.Ripple>
-                                            <Button.Ripple color="warning" type="reset" outline><Delete size={15} className="mr-1" />
+                                            <Button.Ripple color="warning" type="reset" outline onClick={() => resetForm(initialValues)}><Delete size={15} className="mr-1" />
                                             Limpar
                                         </Button.Ripple>
                                         </Col>

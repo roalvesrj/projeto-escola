@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 
-const FormField = ({ name, id, label, value, onChange, ...restProps }) => {
+const FormField = ({ type, name, id, label, value, onChange, onBlur, disabled, ...restProps }) => {
     const [field, meta] = useField({ name, id, ...restProps });
 
     return (
@@ -11,10 +11,13 @@ const FormField = ({ name, id, label, value, onChange, ...restProps }) => {
             )}
             <input
                 {...field}
+                type={type}
                 name={name}
                 id={id ?? name}
                 value={value !== null ? value : ''}
                 onChange={onChange}
+                onBlur={onBlur}
+                disabled={disabled}
                 className={`form-control ${meta.error && meta.touched &&'is-invalid'}`}
             />
             {meta.error && (<span className="form-field__error-message">{meta.error}</span>)}
