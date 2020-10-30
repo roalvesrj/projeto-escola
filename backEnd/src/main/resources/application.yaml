@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /escola
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://wecsisley:22455824@cluster0.g1kim.gcp.mongodb.net/escola?retryWrites=true&w=majority
+
+resources: src/main/resources
+logging:
+  file:
+    name: ${resources}/logs/application.log
