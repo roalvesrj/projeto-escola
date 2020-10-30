@@ -20,7 +20,8 @@ import "../../../assets/scss/pages/users.scss";
 
 import professorService from "../../../services/professorService";
 
-const statusProfessorSelector = [
+const statusSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "Ativo", label: "Ativo" },
     { value: "Inativo", label: "Inativo" },
     { value: "Suspenso", label: "Suspenso" },
@@ -28,12 +29,14 @@ const statusProfessorSelector = [
 ];
 
 const genderSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "Feminino", label: "Feminino" },
     { value: "Masculino", label: "Masculino" },
     { value: "Outros", label: "Outros" }
 ];
 
 const ufSelector = [
+    { value: null, label: "- Selecione - " },
     { value: "AC", label: "Acre" },
     { value: "AL", label: "Alagoas" },
     { value: "AP", label: "Amapá" },
@@ -115,7 +118,7 @@ const ProfessorAdd = () => {
     };
 
     const onSubmit = (values, { resetForm }) => {
-        // alert(JSON.stringify(values, null, 2));
+        alert(JSON.stringify(values, null, 2));
         professorService.incluir(values)
             .then(response => {
                 Object.keys(values).forEach(key => (values[key] = ""));
@@ -176,7 +179,6 @@ const ProfessorAdd = () => {
                                 bairro: '',
                                 cidade: '',
                                 estado: '',
-                                matricula: '',
                                 status: ''
                             }}
                         >
@@ -253,7 +255,6 @@ const ProfessorAdd = () => {
                                                         id="genero"
                                                         onChange={handleChange}
                                                         options={genderSelector}
-                                                        selected={values.genero}
                                                         className={`form-control ${errors.genero && touched.genero && "is-invalid"}`}
                                                     />
                                                     <ErrorMessage name="genero" />
@@ -415,7 +416,6 @@ const ProfessorAdd = () => {
                                                         id="estado"
                                                         onChange={handleChange}
                                                         options={ufSelector}
-                                                        selected={values.estado}
                                                         className={`form-control ${errors.estado && touched.estado && "is-invalid"}`}
                                                     />
                                                     <ErrorMessage name="estado" />
@@ -476,8 +476,7 @@ const ProfessorAdd = () => {
                                                         name="status"
                                                         id="status"
                                                         onChange={handleChange}
-                                                        options={statusProfessorSelector}
-                                                        selected={values.status}
+                                                        options={statusSelector}
                                                         className={`form-control ${errors.status && touched.status && "is-invalid"}`}
                                                     />
                                                     <ErrorMessage name="status" />
