@@ -128,7 +128,7 @@ public class ProfessorController {
                 professorService.deleteById(id);
                 return ResponseEntity.ok().build();
             }
-            log.warn("ProfessorDTO não encontrado com o id informado");
+            log.warn("ProfessorDTO não encontrado com a matrícula informada");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }catch (Exception e){
             log.error("Erro ao deletar um professorDTO");

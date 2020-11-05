@@ -94,9 +94,8 @@ public class DisciplinaService {
                     return Optional.of(disciplinaDTO);
                 }
                 log.info("DisciplinaDTO por id encontrado com sucesso !");
-                Disciplina disciplina = disciplinaOptional.get();
-                return Optional.of(new DisciplinaDTO(disciplina));
-            } catch (NoSuchElementException exception) {
+                return Optional.of(disciplinaDTO);
+        } catch (NoSuchElementException exception) {
                 log.error("Erro ao buscar disciplinaDTO por id");
                 return Optional.empty();
             }
